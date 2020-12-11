@@ -1,5 +1,5 @@
 import './db';
-import {loadUsers} from './seedData'
+import {loadUsers, loadMovies} from './seedData';
 import dotenv from 'dotenv';
 import express from 'express';
 import moviesRouter from './api/movies';
@@ -17,6 +17,7 @@ const port = process.env.PORT;
 
 if (process.env.SEED_DB) {
   loadUsers();
+  loadMovies();
 }
 
 
