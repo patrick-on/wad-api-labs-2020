@@ -13,6 +13,18 @@ const UserSchema = new Schema({
   favourites: [MovieSchema]
 });
 
+UserSchema.statics.findByUserName = function (username) {
+  return this.findOne({ username: username });
+};
+
+UserSchema.methods.comparePassword = function (candidatePassword) {
+  const isMatch = this.password === candidatePassword;
+  if (!isMatch) {
+    throw new Error('Password mismatch');
+  }
+  return this;
+};
+
 const GenreSchema = new Schema({
   name: { type: String, unique: true, required: true},
  
