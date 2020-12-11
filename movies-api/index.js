@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import usersRouter from './api/users';
 import genresRouter from './api/genres';
 import session from 'express-session';
-import authenticate from './authenticate';
+import passport from './authenticate';
 
 dotenv.config();
 
@@ -36,17 +36,20 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use(errHandler);
+
+
 //configure body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(express.static('public'));
+app.use(passport.initialize());
 //update /api/Movie route
-app.use('/api/movies', authenticate, moviesRouter);
+app.use('/api/movies', passport.authenticate('jwt', {session: false}) , moviesRouter);
 //Users router
 app.use('/api/users', usersRouter);
 //Genres router
 app.use('/api/genres', genresRouter);
+app.use(errHandler);
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
 });
