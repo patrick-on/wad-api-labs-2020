@@ -15,7 +15,7 @@ const reducer = (state, action) => {
 };
 
 const MoviesContextProvider = props => {
-  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [] });
+  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [], });
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const MoviesContextProvider = props => {
   useEffect(() => {
     getUpcomingMovies().then(movies => {
       console.log(movies);
-      dispatch({ type: "load", payload: { movies } });
+      dispatch({ type: "load-upcoming", payload: { movies } });
     });
   }, []);
 

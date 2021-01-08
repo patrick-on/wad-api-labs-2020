@@ -1,11 +1,12 @@
 import './db';
-import {loadUsers, loadMovies} from './seedData';
+import {loadUsers, loadMovies, loadUpcoming} from './seedData';
 import dotenv from 'dotenv';
 import express from 'express';
 import moviesRouter from './api/movies';
 import bodyParser from 'body-parser';
 import usersRouter from './api/users';
 import genresRouter from './api/genres';
+import upcomingRouter from './api/upcoming';
 import session from 'express-session';
 import passport from './authenticate';
 
@@ -18,6 +19,7 @@ const port = process.env.PORT;
 if (process.env.SEED_DB) {
   loadUsers();
   loadMovies();
+  loadUpcoming();
 }
 
 
@@ -50,6 +52,8 @@ app.use('/api/movies', passport.authenticate('jwt', {session: false}) , moviesRo
 app.use('/api/users', usersRouter);
 //Genres router
 app.use('/api/genres', genresRouter);
+//Upcoming router
+app.use('/api/upcoming', upcomingRouter);
 app.use(errHandler);
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
