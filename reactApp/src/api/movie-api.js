@@ -37,3 +37,13 @@ export const getUpcomingMovies = () => {
     }
     ).then(res => res.json());
 };
+
+export const getTopratedMovies = () => {
+    return fetch(
+        '/api/toprated', {
+            headers: {
+                'Authorization': window.localStorage.getItem('token')
+            }
+    }
+    ).then(res => res.json());
+};

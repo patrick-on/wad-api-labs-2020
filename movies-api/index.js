@@ -1,5 +1,5 @@
 import './db';
-import {loadUsers, loadMovies, loadUpcoming} from './seedData';
+import {loadUsers, loadMovies, loadUpcoming, loadToprated} from './seedData';
 import dotenv from 'dotenv';
 import express from 'express';
 import moviesRouter from './api/movies';
@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import usersRouter from './api/users';
 import genresRouter from './api/genres';
 import upcomingRouter from './api/upcoming';
+import topratedRouter from './api/toprated';
 import session from 'express-session';
 import passport from './authenticate';
 
@@ -20,6 +21,7 @@ if (process.env.SEED_DB) {
   loadUsers();
   loadMovies();
   loadUpcoming();
+  loadToprated();
 }
 
 
@@ -54,6 +56,8 @@ app.use('/api/users', usersRouter);
 app.use('/api/genres', genresRouter);
 //Upcoming router
 app.use('/api/upcoming', upcomingRouter);
+//Toprated router
+app.use('/api/toprated', topratedRouter);
 app.use(errHandler);
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
