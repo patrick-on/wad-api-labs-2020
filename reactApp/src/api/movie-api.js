@@ -47,3 +47,13 @@ export const getTopratedMovies = () => {
     }
     ).then(res => res.json());
 };
+
+export const getMoviesNowPlaying = () => {
+    return fetch(
+        '/api/nowplaying', {
+            headers: {
+                'Authorization': window.localStorage.getItem('token')
+            }
+    }
+    ).then(res => res.json());
+};

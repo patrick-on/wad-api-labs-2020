@@ -35,6 +35,16 @@ export const TopratedMovies = () => {
     </>
 }
 
+export const MoviesNowPlaying = () => {
+    const context = useContext(MoviesContext);
+    return <>
+        <h2>Now Playing Movies Data </h2>
+        <div>
+            {context.nowplaying.map(movie => { return <>{movie.id},{movie.title}<br /></> })}
+        </div>
+    </>
+}
+
 export const Profile = () => {
     return <h2>My Profile </h2>
 }

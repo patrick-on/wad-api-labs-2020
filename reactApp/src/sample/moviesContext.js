@@ -1,23 +1,25 @@
 import React, { useState, createContext, useEffect, useReducer } from "react";
-import { getMovies, getTopratedMovies, getUpcomingMovies } from "../api/movie-api";
+import { getMovies, getTopratedMovies, getUpcomingMovies, getMoviesNowPlaying } from "../api/movie-api";
 
 export const MoviesContext = createContext(null);
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "load":
-      return { movies: action.payload.movies, upcoming: [...state.upcoming], toprated: [...state.toprated] };
+      return { movies: action.payload.movies, upcoming: [...state.upcoming], toprated: [...state.toprated], nowplaying: [...state.nowplaying] };
     case "load-upcoming":
-      return { upcoming: action.payload.movies, movies: [...state.movies], toprated: [...state.toprated] };
+      return { upcoming: action.payload.movies, movies: [...state.movies], toprated: [...state.toprated], nowplaying: [...state.nowplaying] };
     case "load-toprated":
-      return { toprated: action.payload.movies, movies: [...state.movies], upcoming: [...state.upcoming] };
+      return { toprated: action.payload.movies, movies: [...state.movies], upcoming: [...state.upcoming], nowplaying: [...state.nowplaying] };
+    case "load-nowplaying":
+      return { nowplaying: action.payload.movies, movies: [...state.movies], upcoming: [...state.upcoming], toprated: [...state.toprated] };
     default:
       return state;
   }
 };
 
 const MoviesContextProvider = props => {
-  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [], toprated: [], });
+  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [], toprated: [], nowplaying: [] });
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -41,6 +43,13 @@ const MoviesContextProvider = props => {
     });
   }, []);
 
+  useEffect(() => {
+    getMoviesNowPlaying().then(movies => {
+      console.log(movies);
+      dispatch({ type: "load-nowplaying", payload: { movies } });
+    });
+  }, []);
+
 
   return (
     <MoviesContext.Provider
@@ -48,6 +57,7 @@ const MoviesContextProvider = props => {
         movies: state.movies,
         upcoming: state.upcoming,
         toprated: state.toprated,
+        nowplaying: state.nowplaying,
         setAuthenticated
       }}
     >
