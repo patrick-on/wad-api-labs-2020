@@ -6,6 +6,7 @@ Name: Patrick O Neill
  
  + Feature 1 - Added Upcoming Movies page
  + Feature 2 - Added Top Rated Movies page
+ + Feature 3 = Added Log In and Sign Up page
  + Feature 3 = Integrated API with Assignment 1 app
 
 ## Installation Requirements
