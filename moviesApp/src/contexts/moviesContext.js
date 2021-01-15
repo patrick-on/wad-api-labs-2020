@@ -1,5 +1,5 @@
 import React, { useEffect, createContext, useReducer } from "react";
-import { getMovies, getUpcomingMovies, getTopRatedMovies, getMoviesNowPlaying } from "../api/tmdb-api";
+import { getMovies, getUpcomingMovies, getTopRatedMovies } from "../api/tmdb-api";
 
 export const MoviesContext = createContext(null);
 
@@ -12,7 +12,6 @@ const reducer = (state, action) => {
         ),
         upcoming: [...state.upcoming],
         toprated: [...state.toprated],
-        nowplaying : [...state.nowplaying]
        
       };
 
@@ -23,17 +22,14 @@ const reducer = (state, action) => {
         ), 
         movies: [...state.movies],
         toprated: [...state.toprated],
-        nowplaying : [...state.nowplaying]
       };
     
     case "load":
-      return { movies: action.payload.movies, upcoming: [...state.upcoming], toprated: [...state.toprated], nowplaying: [...state.nowplaying] };
+      return { movies: action.payload.movies, upcoming: [...state.upcoming], toprated: [...state.toprated] };
     case "load-upcoming":
-      return { upcoming: action.payload.movies, movies: [...state.movies], toprated: [...state.toprated], nowplaying: [...state.nowplaying] };
+      return { upcoming: action.payload.movies, movies: [...state.movies], toprated: [...state.toprated]};
     case "load-toprated":
-      return { toprated: action.payload.movies, movies: [...state.movies], upcoming: [...state.upcoming], nowplaying: [...state.nowplaying] };
-    case "load-nowplaying":
-      return { nowplaying: action.payload.movies, movies: [...state.movies], upcoming: [...state.upcoming], toprated: [...state.toprated] };
+      return { toprated: action.payload.movies, movies: [...state.movies], upcoming: [...state.upcoming] };
    
       case "add-review":
       return {
@@ -44,7 +40,6 @@ const reducer = (state, action) => {
         ),
         upcoming: [...state.upcoming],
         toprated: [...state.toprated],
-        nowplaying : [...state.nowplaying],
       };
     default:
       return state;
@@ -89,12 +84,6 @@ const MoviesContextProvider = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    getMoviesNowPlaying().then((movies) => {
-      dispatch({ type: "load-nowplaying", payload: { movies } });
-  });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <MoviesContext.Provider
@@ -102,7 +91,6 @@ const MoviesContextProvider = (props) => {
         movies: state.movies,
         upcoming: state.upcoming,
         toprated: state.toprated,
-        nowplaying: state.nowplaying,
         addToFavorites: addToFavorites,
         addReview: addReview,
         addToWatchList: addToWatchList,

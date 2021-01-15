@@ -11,7 +11,6 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import GenresContextProvider from "./contexts/genresContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
 import upcomingMovies from "./pages/upcomingMovies";
-import moviesNowPlayingPage from "./pages/moviesNowPlayingPage";
 import topRatedMoviesPage from "./pages/topRatedMoviesPage";
 import WatchlistMoviesPage from "./pages/watchlistMoviesPage";
 import AuthProvider from "./pages/authContext";
@@ -36,7 +35,6 @@ const App = () => {
                   <PrivateRoute exact path="/movies/favorites" component={FavoriteMoviesPage} />
                   <PrivateRoute exact path="/movies/watchlist" component={WatchlistMoviesPage} />
                   <PrivateRoute exact path="/movies/upcoming" component={upcomingMovies} />
-                  <PrivateRoute exact path="/movies/playing" component={moviesNowPlayingPage} />
                   <PrivateRoute exact path="/movies/toprated" component={topRatedMoviesPage} />
                   <Route path="/movies/:id" component={MoviePage} />
                   <Route path="/login" component={LoginPage} />
